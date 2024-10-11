@@ -1,7 +1,9 @@
 public sealed class MathService:IMathService
 {
-    public long GetFibonachi(long n)
+    [System.Runtime.InteropServices.DllImport("../../CppLib/build/libproject.dylib")]
+    public static extern int fibonacci(int n);
+    public int GetFibonachi(int n)
     {
-        return 5;
+        return fibonacci(n);
     }
 }

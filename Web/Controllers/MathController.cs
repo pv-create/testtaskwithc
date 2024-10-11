@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Mvc;
 
 namespace testtaskwithc.Controllers;
@@ -6,21 +7,29 @@ namespace testtaskwithc.Controllers;
 [Route("[controller]")]
 public class MathController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly ILogger<MathController> _logger;
+    private readonly IMathService _mathService;
 
-    public MathController(ILogger<MathController> logger)
+    public MathController(
+        ILogger<MathController> logger,
+        IMathService mathService)
     {
         _logger = logger;
+        _mathService = mathService;
     }
 
     [HttpGet(Name = "GetFibonachiNumber")]
-    public ActionResult<int> GetFibonachiNumber()
+    public ActionResult<int> GetFibonachiNumber(int n)
     {
-        return Ok(5);
+        try
+        {
+            int fibonachiResult = _mathService.GetFibonachi(n);
+            return Ok(fibonachiResult);
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return BadRequest("При выполнении операции произошла ошибка.");
+        }
     }
 }

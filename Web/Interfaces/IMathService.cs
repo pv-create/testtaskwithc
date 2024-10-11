@@ -5,5 +5,5 @@ public interface IMathService
     /// </summary>
     /// <param name="n">Номер числа Фибоначи</param>
     /// <returns>Число фибоначи</returns>
-    public long GetFibonachi(long n);
+    public int GetFibonachi(int n);
 }
